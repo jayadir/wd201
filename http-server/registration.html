@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        #user {
+            margin: auto;
+            width: 80%;
+            border: 3px solid green;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <h1>Registration Form</h1>
+        <p>Name: <input required type="text" id="name"></p>
+        <p>Email: <input required type="email" id="email"></p>
+        <p>Password: <input required type="password" id="password"></p>
+        <p>Date of Birth: <input required type="date" id="dob" min="1967-11-09" max="2004-11-09"></p>
+        <p><input required type="checkbox" id="term">Accept Terms and Condition</p>
+        <input type="submit" id="submit">
+    </form>
+    <h1 style="text-align: center;">Entries</h1>
+    <div id="user"></div>
+    <script>
+        let form = document.getElementById("form");
+        const retrieve = () => {
+            let entries = localStorage.getItem("user");
+            if (entries) {
+                entries = JSON.parse(entries);
+            } else {
+                entries = [];
+            }
+            return entries;
+        }
+        let user = retrieve();
+        const display = () => {
+            const entries = retrieve();
+            const table = entries.map((entry) => {
+                const nameCell = `<td>${entry.name}</td>`;
+                const emailCell = `<td>${entry.email}</td>`;
+                const passwordCell = `<td>${entry.password}</td>`;
+                const dobCell = `<td>${entry.dob}</td>`;
+                const termCell = `<td>${entry.term}</td>`;
+                const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${termCell}</tr>`;
+                return row;
+            }).join("\n");
+            const t = `<table><tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Date of Birth</th>
+                <th>Terms</th>
+                </tr>${table}</table>`;
+            let details = document.getElementById("user");
+            details.innerHTML = t;
+        }
+        const saveUser = (event) => {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const dob = document.getElementById("dob").value;
+            const term = document.getElementById("term").checked;
+            const entry = {
+                name,
+                email,
+                password,
+                dob,
+                term
+            };
+            user.push(entry);
+            localStorage.setItem("user", JSON.stringify(user));
+            display();
+        }
+        form.addEventListener("submit", saveUser);
+        display();
+    </script>
+</body>
+</html>
