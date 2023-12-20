@@ -19,20 +19,20 @@ module.exports = (sequelize, DataTypes) => {
       console.log("\n");
 
       console.log("Due Today");
-    
+ 
       const dueTodaytask = await Todo.dueToday();
       dueTodaytask.forEach((task) => console.log(task.displayableString()));
 
       console.log("\n");
 
       console.log("Due Later");
-    
+     
       const duetask = await Todo.dueLater();
       duetask.forEach((task) => console.log(task.displayableString()));
     }
 
     static async overdue() {
-     TO RETURN OVERDUE ITEMS
+   
       const { Sequelize } = require("sequelize");
       return await Todo.findAll({
         where: {
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async dueToday() {
-     //TO RETURN ITEMS DUE tODAY
+    
       const { Sequelize } = require("sequelize");
       const today = new Date();
 
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async dueLater() {
-     TO RETURN ITEMS DUE LATER
+     
       const { Sequelize } = require("sequelize");
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async markAsComplete(id) {
-     TO MARK AN ITEM AS COMPLETE
+
       const todo = await Todo.findByPk(id);
       if (todo) {
         todo.completed = true;
