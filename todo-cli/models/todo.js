@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async dueToday() {
-     TO RETURN ITEMS DUE tODAY
+     //TO RETURN ITEMS DUE tODAY
       const { Sequelize } = require("sequelize");
       const today = new Date();
 
